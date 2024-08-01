@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ESM ATS Expert</title>
+</head>
+<body>
+    <h1>ESM ATS Tracker</h1>
+    <form method="post" enctype="multipart/form-data">
+        <textarea name="input_text" placeholder="Job Description" rows="10" cols="50"></textarea><br><br>
+        <label for="uploaded_files">Upload your resumes (PDF):</label>
+        <input type="file" name="uploaded_files" multiple><br><br>
+        <label for="prompt_type">Select Prompt:</label>
+        <select name="prompt_type">
+            <option value="1">Summary Resume</option>
+            <option value="2">Suggestions</option>
+            <option value="3">Percentage Match and Missing Keywords</option>
+            <option value="4">PDF to JD</option>
+        </select><br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    {% if responses %}
+        <h2>Results:</h2>
+        <ul>
+        {% for response in responses %}
+            <li>
+                <h3>Resume: {{ response.file_name }}</h3>
+                <p><strong>Name:</strong> {{ response.name }}</p>
+                <p><strong>Response:</strong></p>
+                <pre>{{ response.response }}</pre>
+                <a href="{{ url_for('download_pdf', index=loop.index0, response_text=response.response) }}">Download as PDF</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
