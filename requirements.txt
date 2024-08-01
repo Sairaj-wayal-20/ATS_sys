@@ -1,0 +1,7 @@
+streamlit
+google-generativeai
+python-dotenv
+Pdf2image
+PyQt5
+Flask
+-e .
